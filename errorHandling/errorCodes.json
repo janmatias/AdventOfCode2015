@@ -1,11 +1,12 @@
 {
-	"0" : "End or program",
+	"0" : "End or program.",
 	
-	"1" : "Illegal argument",
-	"2" : "Illegal number of arguments",
+	"1" : "Illegal argument!",
+	"2" : "Illegal number of arguments!",
 
-	"10" : "Illegal format of input data",
+	"10" : "Illegal format of input data.",
 
-	"100" : "Internal logical error",
-	"101" : "Specific alterRange error"
+	"100" : "Internal logical error.",
+	"101" : "Specific alterRange error.",
+	"102" : "Specific problem with day 3 resolve function."
 }
