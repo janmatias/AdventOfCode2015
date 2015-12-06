@@ -1,0 +1,11 @@
+{
+	"0" : "End or program",
+	
+	"1" : "Illegal argument",
+	"2" : "Illegal number of arguments",
+
+	"10" : "Illegal format of input data",
+
+	"100" : "Internal logical error",
+	"101" : "Specific alterRange error"
+}
