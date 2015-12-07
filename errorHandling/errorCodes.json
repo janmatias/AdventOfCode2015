@@ -8,5 +8,7 @@
 
 	"100" : "Internal logical error.",
 	"101" : "Specific alterRange error.",
-	"102" : "Specific problem with day 3 resolve function."
+	"102" : "Specific problem with day 3 resolve function.",
+
+	"110" : "Programmer logic and computer logic not synchronized..."
 }
