@@ -5,6 +5,7 @@
 	"2" : "Illegal number of arguments!",
 
 	"10" : "Illegal format of input data.",
+	"11" : "Inout data file not found",
 
 	"100" : "Internal logical error.",
 	"101" : "Specific alterRange error.",
