@@ -3,6 +3,7 @@
 	
 	"1" : "Illegal argument!",
 	"2" : "Illegal number of arguments!",
+	"3" : "Test file doesn't exist for this day!",
 
 	"10" : "Illegal format of input data.",
 	"11" : "Inout data file not found",
