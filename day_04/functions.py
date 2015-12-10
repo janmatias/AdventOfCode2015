@@ -2,7 +2,7 @@ from hashlib import md5
 
 
 # ---
-def resolve(lines, part):
+def resolve(lines, part, verbose=False):
 	data = lines[0]
 	target = "00000"
 	if (part == '2'):

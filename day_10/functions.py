@@ -15,18 +15,18 @@ def lookAndSay(s):
 	return newS
 
 # ---
-def resolve(lines, part):
+def resolve(lines, part, verbose=False):
 
 	if (part == '2'):
 		iterations = 50
 	else:
 		iterations = 40
-
+		
 	result = ""
 	for line in lines:
 		for _ in range(iterations):
 			line = lookAndSay(line)
 		result += str(len(line)) + "\n"
-	return result
+	return result[:-1]
 
 

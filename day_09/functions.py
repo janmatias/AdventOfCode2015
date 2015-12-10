@@ -27,7 +27,7 @@ class Graph():
 
 
 # ---
-def resolve(lines, part):
+def resolve(lines, part, verbose=False):
 	graph = Graph()
 	for line in lines:
 		p1, _, p2, _, cost = line.split(" ")

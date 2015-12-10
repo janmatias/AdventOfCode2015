@@ -62,7 +62,7 @@ class LightGrid():
 
 # ---
 
-def resolve(lines, part):
+def resolve(lines, part, verbose=False):
 	lg = LightGrid()
 	commands = []
 	for line in lines:

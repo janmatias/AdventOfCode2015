@@ -40,5 +40,5 @@ for line in data:
 data.close()
 
 # Execute main program
-result = resolve(lines, args.part)
+result = resolve(lines, args.part, args.verbose)
 print ("Result: " + str(result))

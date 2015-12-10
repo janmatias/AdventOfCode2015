@@ -15,7 +15,7 @@ class infiniteGrid():
 		else:
 			self.position = newPosition
 # ---
-def resolve(lines, part):
+def resolve(lines, part, verbose=False):
 	
 	ig = infiniteGrid()
 	iteration = 0

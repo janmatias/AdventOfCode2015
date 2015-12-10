@@ -54,7 +54,7 @@ class Circuit():
 			throw(110)
 
 # ---
-def resolve(lines, part):
+def resolve(lines, part, verbose=False):
 
 	circuit = Circuit()
 	for line in lines:

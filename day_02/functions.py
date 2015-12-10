@@ -20,7 +20,7 @@ def getLengthOfShortestPerimeter(l, w, h):
 	return sides[0]*2 + sides[1]*2
 
 # ---
-def resolve(lines, part):
+def resolve(lines, part, verbose=False):
 	total = 0
 	for line in lines:
 		l, w, h = parseDimensions(line)

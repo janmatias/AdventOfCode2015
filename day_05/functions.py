@@ -42,7 +42,7 @@ def stringIsNiceV2(string):
 
 # ---
 
-def resolve(lines, part):
+def resolve(lines, part, verbose=False):
 	result = 0
 	for line in lines:
 		if (part == '1'):

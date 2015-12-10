@@ -35,7 +35,7 @@ def encode(string):
 	return encoded
 
 # ---
-def resolve(lines, part):
+def resolve(lines, part, verbose=False):
 	sumLiterals = 0
 	sumMemory = 0
 	sumEncoded = 0

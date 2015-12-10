@@ -1,3 +1,5 @@
+v = False
+
 def iterateOverLine(line, part):
 	floor = 0
 	iteration = 0
@@ -8,8 +10,7 @@ def iterateOverLine(line, part):
 		elif (c == ')'):
 			floor -= 1
 		else:
-			print ("Error in input data!")
-			sys.exit(10)
+			throw(10)
 		if (part == '2' and floor == -1):
 			return iteration
 	if (part == '2'):
@@ -17,6 +18,7 @@ def iterateOverLine(line, part):
 	return floor
 
 # ---
-def resolve(lines, part):
+def resolve(lines, part, verbose=False):
+	v = verbose
 	line = lines[0]
 	return iterateOverLine(line, part)
