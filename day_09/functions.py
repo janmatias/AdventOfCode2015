@@ -1,86 +1,43 @@
-import sys, copy
+import sys, itertools
 
-class Node():
-	def __init__(self, id):
-		self.id = id
-		self.children = {}
-		self.distance = sys.maxsize
+class Graph():
+	def __init__(self):
+		self.locs = set()
+		self.costDict = {}
 
-def djikstra(initialNode, allNodes):
-	unvisited = copy.deepcopy(allNodes)
-	visited = {}
-	current = initialNode
-	current.distance = 0
-	print(current.id + "---id---")
+	def add(self, node1, node2, cost):
+		self.locs.add(node1)
+		self.locs.add(node2)
+		if (node1 in self.costDict):
+			self.costDict[node1][node2] = cost
+		else:
+			self.costDict[node1] = {node2 : cost}
 
-	while (len(unvisited) > 0):
-		print("Current: " + current.id)
-		costToCurrent = current.distance
-		for n in unvisited.values():
-			if (n.id in current.children and n.id != current.id):
-				costToNext = current.children[n.id]
-				fullCostToNext = n.distance
+		if (node2 in self.costDict):
+			self.costDict[node2][node1] = cost
+		else:
+			self.costDict[node2] = {node1 : cost}
 
-				if (costToCurrent + costToNext < fullCostToNext):
-					n.distance = costToCurrent + costToNext
-					print("node: " + n.id + " set distance to: " + str(n.distance))
-		
-		visited[current.id] = unvisited[current.id]
-		del unvisited[current.id]
-		current = getNodeWithLowestCost(unvisited)
+	def traverse(self, order):
+		traversalCost = 0
+		for i in range(len(order)-1):
+			currentTraversal = (order[i], order[i+1])
+			traversalCost += self.costDict[currentTraversal[0]][currentTraversal[1]]
+		return traversalCost
 
-	return getNodeWithHighestCost(visited).distance
-	
-
-def getNodeWithLowestCost(nodes):
-	minNode = None
-	minValue = sys.maxsize
-	for n in nodes.values():
-		print(n.distance)
-		if (n.distance < minValue):
-			minValue = n.distance
-			minNode = n
-	return minNode
-
-def getNodeWithHighestCost(nodes):
-	maxNode = None
-	maxValue = -1
-	for n in nodes.values():
-		print ("maxFor- " + n.id + " - " + str(n.distance))
-		if (n.distance > maxValue):
-			maxValue = n.distance
-			maxNode = n
-	print("returning max: " + str(maxNode.distance))
-	return maxNode
 
 # ---
 def resolve(lines, part):
-	nodes = {}
+	graph = Graph()
 	for line in lines:
-		ls = line.split(" ")
-		fromCity = ls[0]
-		toCity = ls[2]
-		cost = int(ls[4])
-
-		if (fromCity not in nodes.keys()):
-			nodes[fromCity] = Node(fromCity)
-			print("Generating: " + fromCity)
-		nodes[fromCity].children[toCity] = cost
-		print("Adding " + str(cost) + " to children of " + fromCity + ".  toCity == " + toCity)
-
-		if (toCity not in nodes.keys()):
-			nodes[toCity] = Node(toCity)
-			print("Generating: " + toCity)
-		nodes[toCity].children[fromCity] = cost
-		print("Adding " + str(cost) + " to children of " + toCity + ".  fromCity == " + fromCity)
-
-
-	minimum = sys.maxsize
-	for k in nodes.keys():
-		print(nodes[k].id + " - " + str(nodes[k].children))
-	for id, node in nodes.items():
-		print ("iterating...\n")
-		#print(nodes)
-		unvisited = copy.deepcopy(nodes)
-		minimum = min(minimum, djikstra(copy.deepcopy(node), unvisited))
-	return minimum
+		p1, _, p2, _, cost = line.split(" ")
+		graph.add(p1, p2, int(cost))
+	
+	traversalCost = sys.maxsize
+	decider = min
+	if (part == '2'):
+		traversalCost = -sys.maxsize
+		decider = max
+	for permutation in (itertools.permutations(graph.locs)):
+		traversalCost = decider(graph.traverse(permutation), traversalCost)
+	return traversalCost
