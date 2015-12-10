@@ -6,6 +6,7 @@ parser = argparse.ArgumentParser(description="This program is able to run the ad
 parser.add_argument('day', type=int, choices=[x for x in range(1, 26)], help="Varible to define what day to run.")
 parser.add_argument('part', nargs='?', const='1', default='1', choices=['1', '2'], help="Variable to define what part of the challenge to solve.")
 parser.add_argument('-t', '--testing', action='store_true', help="Boolean to set the test data file as the input.")
+parser.add_argument('-v', '--verbose', action='store_true', help="Boolean to enable verbosity. (Show more than result)")
 
 args = parser.parse_args()
 
