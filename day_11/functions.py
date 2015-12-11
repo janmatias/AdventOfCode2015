@@ -1,4 +1,3 @@
-v = False
 alfabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
 illegal = [8, 11, 14]
 
@@ -21,8 +20,6 @@ def incrementPassList(passList):
 	for i in range(-len(passList), 0):
 		if passList[i] in illegal:
 			index = i
-			if (v): 
-				print("Illegal character found at: " + str(i))
 			for j in range(i+1, 0):
 				passList[j] = 0
 	while (abs(index) <= len(passList)):
@@ -59,23 +56,32 @@ def containsTwoDifferentPairs(passList):
 				foundOnePair = True
 	return False
 
+def findNextLegalPasword(password):
+	passList = convertPasswordToPassList(password)
+	incrementPassList(passList)
+
+	while (not passListIsLegal(passList)):
+		incrementPassList(passList)
+	
+	return convertPassListToPassword(passList)
+
 
 def passListIsLegal(passList):
-	return containsThreeConsecutiveIncreasingCharacters(passList) and not containsIllegalCharacter(passList) and containsTwoDifferentPairs(passList)
+	return (containsThreeConsecutiveIncreasingCharacters(passList)
+		and containsTwoDifferentPairs(passList)
+		and not containsIllegalCharacter(passList))
 
 # ---
-def resolve(lines, part, verbose=True):
-	v = verbose
+def resolve(lines, part):
 	result = ""
 	for line in lines:
 		line = line.replace("\n", "")
-		passList = convertPasswordToPassList(line)
+	
+		newPass = findNextLegalPasword(line)
+		result += newPass + "\n"
 
-		while (not passListIsLegal(passList)):
-			incrementPassList(passList)
-		
-		result += convertPassListToPassword(passList)  + '\n'
-
-		#result += doSomethingFancy(line) + "\n"
+		if (part == '2'):
+			newNewPass = findNextLegalPasword(newPass)
+			result += newNewPass + "\n"
 
 	return result[:-1]
