@@ -11,6 +11,7 @@
 	"100" : "Internal logical error.",
 	"101" : "Specific alterRange error.",
 	"102" : "Specific problem with day 3 resolve function.",
+	"103" : "General solution incomplete. Sorry about that.",
 
 	"110" : "Programmer logic and computer logic not synchronized..."
 }
