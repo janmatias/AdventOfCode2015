@@ -11,7 +11,7 @@ args = parser.parse_args()
 
 # Import correct day
 dayList = ["day_0"+str(x) for x in range(1, 10)]
-dayList.extend(["day_"+str(x) for x in range(10, 25)])
+dayList.extend(["day_"+str(x) for x in range(10, 26)])
 
 package = dayList[int(args.day)-1]
 module = __import__(package + '.functions', fromlist=["resolve"])
