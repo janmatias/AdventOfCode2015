@@ -36,37 +36,6 @@ def startTurn(mana, armor, BossHP, activeEffects):
 def chooseSpell(armor, HP, BossHP, BossDmg, mana, spells, activeEffects):
 	choice = random.choice([x for x in spells.keys() if (x not in activeEffects.keys() and spells[x]["cost"] <= mana)])
 	return choice, spells[choice]["cost"]
-	if (BossHP <= 7 and mana >= spells["Magic Missile"]["cost"]):
-		return "Magic Missile", 53
-
-	elif ("Poison" not in activeEffects.keys() and BossDmg - armor < HP):
-		return "Poison", 173
-		"""
-		if (mana - spells["Poison"]["cost"] >= spells["Recharge"]["cost"]):
-			toCast = "Poison"
-		elif ("Recharge" not in activeEffects.keys() and spells["Recharge"]["cost"] <= mana):
-			toCast = "Recharge"
-		elif ("Shield" not in activeEffects.keys() and spells["Shield"]["cost"] <= mana):
-			toCast = "Shield"
-		elif (spells["Drain"]["cost"] <= mana):
-			toCast = "Drain"
-		elif(spells["Magic Missile"]["cost"] <= mana):
-			toCast = "Magic Missile"
-		else:
-			return "Not enough mana! (0x0A)"
-			"""
-
-	elif ("Recharge" not in activeEffects.keys() and mana >= spells["Recharge"]["cost"] and mana <= 500 and BossDmg - armor < HP):
-		return "Recharge", 229
-
-	elif ("Shield" not in activeEffects.keys() and mana >= spells["Shield"]["cost"]):
-		return "Shield", 113
-
-	elif (mana >= spells["Drain"]["cost"]):
-		return "Drain", 73
-	elif (mana >= spells["Magic Missile"]["cost"]):
-		return "Magic Missile", 53
-	print("NoMoreMana!")
 
 def castSpell(spell, spells, activeEffects, HP, armor, BossHP):
 	if (spell == "Drain"):
@@ -96,26 +65,14 @@ def resolve(lines, part):
 			  "Poison" : 		{"cost" : 173, "turns" : 6, "damage" : 3, "heal" : 0, "armor" : 0, "mana" : 0},
 			  "Recharge" : 		{"cost" : 229, "turns" : 5, "damage" : 0, "heal" : 0, "armor" : 0, "mana" : 101},
 			 }
-	"""
-	spells = [["Magic Missile", 53, 	0,		4, 		0, 		0, 		0],
-			  ["Drain", 		73, 	0, 		2, 		2, 		0, 		0],
-			  ["Shield", 		113, 	6, 		0, 		0, 		7, 		0],
-			  ["Poison", 		173, 	6, 		3, 		0, 		0, 		0],
-			  ["Recharge", 		229, 	5, 		0, 		0, 		0, 	  101]
-			 ]
-	"""
+
 	outputs = []
 	minMana = sys.maxsize
-	for i in range(10000):
-
+	for i in range(100000):
 
 		BossHP = int(lines[0].split(" ")[-1])
 		BossDmg = int(lines[1].split(" ")[-1])
 
-		#BossHP = 14
-		#BossDmg = 8
-		#mana = 250
-		#HP = 10
 		mana = 500
 		HP = 50
 		armor = 0
@@ -123,12 +80,15 @@ def resolve(lines, part):
 		manaSpent = 0
 		output = "Victory!"
 		while(HP > 0 and BossHP > 0):
-			#print("Boss HP: " + str(BossHP))
-			#print("Player HP: " + str(HP))
-			
+
 			print("\n-- Player Turn --")
 			print("- Player has %s hit points, %s armor, %s mana" % (HP, armor, mana))
 			print("- Boss has %s hit points" % BossHP)
+
+			if (part == '2'):
+				HP -= 1
+				if (HP <= 0):
+					break
 
 			mana, armor, BossHP, activeEffects = startTurn(mana, armor, BossHP, activeEffects)
 
@@ -137,8 +97,9 @@ def resolve(lines, part):
 				break
 
 			toCast, cost = chooseSpell(armor, HP, BossHP, BossDmg, mana, spells, activeEffects)
+
 			print("Player casts %s for %s mana." % (toCast, cost))
-			#print("Player casts: " + toCast)
+
 			manaSpent += cost
 			if (mana < cost):
 				output = "Mana error"
@@ -147,9 +108,6 @@ def resolve(lines, part):
 			activeEffects, HP, armor, BossHP = castSpell(toCast, spells, activeEffects, HP, armor, BossHP)
 			if (BossHP <= 0):
 				break
-
-			#print("Boss HP: " + str(BossHP))
-			#print("Player HP: " + str(HP))
 			
 			print("\n-- Boss Turn --")
 			print("- Player has %s hit points, %s armor, %s mana" % (HP, armor, mana))
@@ -160,9 +118,7 @@ def resolve(lines, part):
 				break
 			HP -= max(BossDmg - armor, 1)
 			print("Boss attacks for %s damage." % max(BossDmg - armor, 1))
-			#print("Boss HP: " + str(BossHP))
-			#print("Player HP: " + str(HP))
-			#print("")
+
 		if (HP <= 0 or output == "No more mana for spells"):
 			continue
 		else:
@@ -170,8 +126,6 @@ def resolve(lines, part):
 			print("")
 			minMana = min(minMana, manaSpent)
 		outputs.append(output)
-		#print("Boss HP: " + str(BossHP))
-		#print("Player HP: " + str(HP))
-		#print("")
+
 	print(outputs)
 	return minMana
