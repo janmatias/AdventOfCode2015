@@ -5,14 +5,14 @@
 	"2" : "Illegal number of arguments!",
 	"3" : "Test file doesn't exist for this day!",
 
-	"10" : "Illegal format of input data.",
-	"11" : "Inout data file not found",
+	"10" : "Illegal format of input data!",
+	"11" : "Input data file not found!",
 
-	"100" : "Internal logical error.",
-	"101" : "Specific alterRange error.",
-	"102" : "Specific problem with day 3 resolve function.",
-	"103" : "General solution incomplete. Sorry about that.",
-	"104" : "Specific problem with day 3 resolve function.",
+	"100" : "Internal logical error!",
+	"101" : "Specific alterRange error!",
+	"102" : "Specific problem with day 3 resolve function!",
+	"103" : "General solution incomplete. Sorry about that!",
+	"104" : "Specific problem with day 3 resolve function!",
 
 	"110" : "Programmer logic and computer logic not synchronized..."
 }

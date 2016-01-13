@@ -27,6 +27,6 @@ def resolve(lines, part):
 		for _ in range(iterations):
 			line = lookAndSay(line)
 		result += str(len(line)) + "\n"
-	return result
+	return result[:-1]
 
 

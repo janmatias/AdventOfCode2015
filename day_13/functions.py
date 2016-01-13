@@ -23,8 +23,6 @@ def calculateHappiness(people, permutation, verbose=False):
 
 # ---
 def resolve(lines, part):
-	print("Working...")
-
 	# Generate dictionary containing every person
 	people = {}
 	for line in lines:

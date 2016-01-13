@@ -47,7 +47,6 @@ def findWinningDistanceAndScore(reindeer):
 
 # ---
 def resolve(lines, part):
-	print("test")
 	reindeer = []
 	# parse text input
 	for line in lines:
