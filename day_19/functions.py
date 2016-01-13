@@ -1,5 +1,4 @@
-import copy
-from day_19.CustomAStar.CustomSolver import CustomSolver
+import re, random, copy
 
 def parseLines(lines):
 	molecule = ""
@@ -33,59 +32,79 @@ def moleculeToList(molecule):
 		atoms.append(molecule[-1])
 
 	return atoms
+
+def listToMolecule(molList):
+	return "".join(molList)
 		
 def calibrate(replacements, molecule):
 	results = set() # Guarantee unique elements
 	for rk in replacements.keys(): # for all atoms that can be replaced
 		for r in replacements[rk]: # for all possible replacements for atom rk
 			for i in range(len(molecule)): # for every atom in molecule
-				if (molecule[i] == rk):
+				if (molecule[i] == rk): # If current atom is replaceable
 					new = copy.deepcopy(molecule)
 					new[i] = r
-					results.add("".join(new)) # Add molecule as string
+					results.add(listToMolecule(new)) # Add molecule as string
 
 	return len(results)
 
-def create(replacements, molecule):
-	possibleOuts = [['e']]
-	count = 0
-	while (molecule not in possibleOuts):
-		#print(possibleOuts)
-		count += 1
-		if (count == 10):
-			thr
-		current = copy.deepcopy(possibleOuts)
-		possibleOuts = []
-		for rk in replacements.keys():
+def reduce(mol, replacements, count=0):
+	if (mol == 'e'):
+		return count
+	for rk in replacements.keys():
+		indices = [m.start() for m in re.finditer(rk, mol)]
+		for i in indices:
 			for r in replacements[rk]:
-				for c in current:
-					for i in range(len(c)):
-						if (c[i] == rk):
-							new = copy.deepcopy(c)
-							insertion = moleculeToList(r)
-							ic = 0
-							for ai in range(len(insertion)):
-								new.insert(i + ic, insertion[ai])
-								ic += 1
-							
-							possibleOuts.append(new)
-							
-	return count
+				newMol = mol[:i]
+				newMol += r
+				newMol += mol[i+len(rk):]
+				print(newMol)
+				reduce(newMol, replacements, count+1)
 
+def randomReduction(mol, replacements):
+	options = []
+	for rk in replacements.keys():
+		indices = [m.start() for m in re.finditer(rk, mol)]
+		for i in indices:
+			options.append((i, rk, replacements[rk][0]))
+	if (len(options) == 0):
+		return None
+	choice = random.choice(options)
+	newMol = mol[:choice[0]]
+	newMol += choice[2]
+	newMol += mol[choice[0]+len(choice[1]):]
+	return newMol
+
+		
+
+def reverseDict(d):
+	inv = {}
+	for k in d.keys():
+		for v in d[k]:
+			if v in inv.keys():
+				inv[v].append(k)
+			else:
+				inv[v] = [k]
+	return inv
 
 # ---
 def resolve(lines, part):
 	replacements, molecule = parseLines(lines)
+	reversedReplacements = reverseDict(replacements)
 
+	
 	if (part == '1'):
 		return calibrate(replacements, molecule)
 	else:
-		solver = CustomSolver("".join(molecule), replacements)
-		result = solver.search()
-		return result
-		#backwards(replacements, "".join(molecule))
-		#return create(replacements, molecule)
+		molecule = listToMolecule(molecule)
+		original = molecule
 
-
-	
-	
+		while (True):
+			count = 0
+			while (molecule != 'e' and molecule != None):
+				molecule = randomReduction(molecule, reversedReplacements)
+				count += 1
+			if (molecule == 'e'):
+				return count
+			else:
+				molecule = original
